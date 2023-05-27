@@ -19,24 +19,37 @@ app.get('/products', (req, res) => {
       quantity: 10
      }]);
 });
+app.get('/categories/:categoryId',(req,res)=>{
+  const {categoryId}= req.params
+  res.json([
+    {
+      categoryId,
+      category: 'Food',
+      products: []
+    }
+  ])
+})
 
-app.get('/products/:id', (req, res) => {
-  const { id } = req.params;
-  res.json({
-    id,
-    name: 'iphone',
-    price: 1000,
-    quantity: 10,
-  });
-});
-
-app.get('/categories/:categoryId/products/:productId', (req, res) => {
-  const {categoryId,productId}=req.params
-  res.json({
-    categoryId,
-    productId,
-  })
-});
+app.get('/categories',(req,res)=>{
+  const {categoryId}= req.params
+  res.json([
+    {
+      categoryId,
+      category: 'Food',
+      products: []
+    },
+    {
+      categoryId,
+      category: 'Games',
+      products: []
+    },
+    {
+      categoryId,
+      category: 'clothes',
+      products: []
+    },
+  ])
+})
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
