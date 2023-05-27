@@ -1,23 +1,31 @@
 
 const express = require('express');
-
+const Chance = require('chance');
 const app = express();
-const PORT = process.env.PORT || 5000;
-
+const PORT = process.env.PORT || 3000;
+var chance = new Chance();
 app.get('/', (req, res) => {
   res.send('Hello woorld!');
 });
 
-app.get('/products', (req, res) => {
-  res.json([
-    { name: 'iphone',
-     price: 1000,
-      quantity: 10
-     },{
-      name: 'samsung',
-      price: 900,
-      quantity: 10
-     }]);
+ app.get('/products', (req, res) => {
+  const products = []
+
+  //console.log(products);
+  for (let index = 0; index < 100; index++) {
+    products.push({
+      city:chance.city(),
+       country:chance.country(),
+      phone:chance.phone(),
+      //image:faker.image.imageUrl()
+     })
+
+
+  };
+  console.log(products);
+
+  res.json(products)
+
 });
 app.get('/categories/:categoryId',(req,res)=>{
   const {categoryId}= req.params
@@ -51,6 +59,14 @@ app.get('/categories',(req,res)=>{
   ])
 })
 
+app.get('/users',(req,res)=>{
+  const {limit,offset} = req.query
+  if (limit && offset) {
+    res.json({limit: limit, offset: offset})
+  }else{
+    res.send("no hay parametros")
+  }
+})
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
