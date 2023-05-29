@@ -8,27 +8,30 @@ app.get('/', (req, res) => {
   res.send('Hello woorld!');
 });
 
- app.get('/products', (req, res) => {
+app.get('/products', (req, res) => {
   const products = []
-
+  const { size } = req.query
+  const limit = size || 10
   //console.log(products);
-  for (let index = 0; index < 100; index++) {
+  for (let index = 0; index < limit; index++) {
     products.push({
-      city:chance.city(),
-       country:chance.country(),
-      phone:chance.phone(),
+      city: chance.city(),
+      country: chance.country(),
+      phone: chance.phone(),
       //image:faker.image.imageUrl()
-     })
+    })
 
 
   };
-  console.log(products);
+  console.log({ products });
 
   res.json(products)
 
 });
-app.get('/categories/:categoryId',(req,res)=>{
-  const {categoryId}= req.params
+
+
+app.get('/categories/:categoryId', (req, res) => {
+  const { categoryId } = req.params
   res.json([
     {
       categoryId,
@@ -38,8 +41,8 @@ app.get('/categories/:categoryId',(req,res)=>{
   ])
 })
 
-app.get('/categories',(req,res)=>{
-  const {categoryId}= req.params
+app.get('/categories', (req, res) => {
+  const { categoryId } = req.params
   res.json([
     {
       categoryId,
@@ -58,12 +61,26 @@ app.get('/categories',(req,res)=>{
     },
   ])
 })
+app.get('/products/filter',(req,res)=>{
 
-app.get('/users',(req,res)=>{
-  const {limit,offset} = req.query
+  res.send('soy un filter')
+})
+
+app.get('/products/:id',(req,res)=>{
+    const {id}=req.params
+    res.json({
+      id,
+      name:"product name",
+      price:200
+      })
+})
+
+
+app.get('/users', (req, res) => {
+  const { limit, offset } = req.query
   if (limit && offset) {
-    res.json({limit: limit, offset: offset})
-  }else{
+    res.json({ limit: limit, offset: offset })
+  } else {
     res.send("no hay parametros")
   }
 })
