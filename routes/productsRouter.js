@@ -1,25 +1,11 @@
 const express=require('express');
-const Chance = require('chance');
+const ProductService = require('./../services/product.service');
 const router=express.Router();
-var chance = new Chance();
+const service=new ProductService(); //instancia de la clase
 
 router.get('/', (req, res) => {
-  const products = []
-  const { size } = req.query
-  const limit = size || 10
-  //console.log(products);
-  for (let index = 0; index < limit; index++) {
-    products.push({
-      city: chance.city(),
-      country: chance.country(),
-      phone: chance.phone(),
-      //image:faker.image.imageUrl()
-    })
-
-
-  };
+  const products=service.find()
   console.log({ products });
-
   res.json(products)
 
 });
@@ -31,18 +17,11 @@ router.get('/filter',(req,res)=>{
 
 
 router.get('/:id',(req,res)=>{
-    const {id}=req.params
-    if(id==="999"){
-      res.status(404).json({
-        message:"not found"
-      })
-    }else{
-    res.status(200).json({
-      id,
-      name:"product name",
-      price:200
-      })
-    }
+  const {id}=req.params
+
+    const product_id=service.findOne(id)
+
+    res.json(product_id)
 })
 
 router.post("/",(req,res)=>{
