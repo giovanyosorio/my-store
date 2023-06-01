@@ -22,7 +22,13 @@ constructor() {
 
     };
     }
-  create(){
+  create(data){
+    const newProduct={
+      id:chance.guid(),
+      ...data
+    }
+    this.products.push(newProduct)
+    return newProduct
   }
 
   find()  {
@@ -33,10 +39,29 @@ constructor() {
     return  this.products.find(item=>item.id===id)
   }
 
-  update()  {
+  update(id,changes)  {
+
+    const index=this.products.findIndex(item=>item.id===id)
+    if(index===-1){
+      throw new Error("product not found")
+    }
+    const product = this.products[index]
+  this.products[index] ={
+    ...product,
+    ...changes
+  }
+  return this.products[index]
+
+
   }
 
-  delete()  {
+  delete(id)  {
+    const index=this.products.findIndex(item=>item.id===id)
+    if(index===-1){
+      throw new Error("product not found")
+    }
+    this.products.splice(index,1)
+    return {id}
   }
 }
 module.exports=ProductService
