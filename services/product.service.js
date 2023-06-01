@@ -7,7 +7,7 @@ constructor() {
 
 }
 
-  generate(){
+async generate(){
     const limit = 100
     //console.log(products);
     for (let index = 0; index < limit; index++) {
@@ -22,7 +22,7 @@ constructor() {
 
     };
     }
-  create(data){
+    async create(data){
     const newProduct={
       id:chance.guid(),
       ...data
@@ -31,15 +31,20 @@ constructor() {
     return newProduct
   }
 
-  find()  {
-    return this.products
+  async find()  {
+    return new Promise((resolve,reject)=>{
+      setTimeout(() => {
+         resolve(this.products)
+      }, 2000);
+    })
+
   }
 
-  findOne(id)  {
+  async findOne(id)  {
     return  this.products.find(item=>item.id===id)
   }
 
-  update(id,changes)  {
+  async update(id,changes)  {
 
     const index=this.products.findIndex(item=>item.id===id)
     if(index===-1){
@@ -55,7 +60,7 @@ constructor() {
 
   }
 
-  delete(id)  {
+ async delete(id)  {
     const index=this.products.findIndex(item=>item.id===id)
     if(index===-1){
       throw new Error("product not found")
