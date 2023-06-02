@@ -41,6 +41,7 @@ async generate(){
   }
 
   async findOne(id)  {
+    const name=this.getTotal()
     return  this.products.find(item=>item.id===id)
   }
 
