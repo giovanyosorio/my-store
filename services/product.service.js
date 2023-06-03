@@ -1,5 +1,6 @@
 const Chance = require('chance');
 var chance = new Chance();
+const boom=require("@hapi/boom")
 class ProductService{ //clase para generar productos
 constructor() {
   this.products=[]
@@ -16,6 +17,7 @@ async generate(){
         city: chance.city(),
         country: chance.country(),
         phone: chance.phone(),
+        isBlocked: chance.bool()
         //image:faker.image.imageUrl()
       })
 
@@ -41,15 +43,22 @@ async generate(){
   }
 
   async findOne(id)  {
-    const name=this.getTotal()
-    return  this.products.find(item=>item.id===id)
+    const product=this.products.find(item=>item.id===id)
+
+    if(!product){
+      throw boom.notFound("product not found")
+    }
+    if(product.isBlocked){
+      throw boom.conflict("product is blocked")
+    }
+    return product
   }
 
   async update(id,changes)  {
 
     const index=this.products.findIndex(item=>item.id===id)
     if(index===-1){
-      throw new Error("product not found")
+      throw boom.notFound("product not found")
     }
     const product = this.products[index]
   this.products[index] ={
@@ -64,7 +73,7 @@ async generate(){
  async delete(id)  {
     const index=this.products.findIndex(item=>item.id===id)
     if(index===-1){
-      throw new Error("product not found")
+      throw boom.notFound("product not found")
     }
     this.products.splice(index,1)
     return {id}
