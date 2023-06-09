@@ -8,7 +8,8 @@ const PORT = process.env.PORT || 3000;
 
 
 app.use(express.json());//middleware para parsear el body a json
-app.get('/', (req, res) => {
+
+app.get('/api', (req, res) => {
   res.send('Hello world!');
 });
 
