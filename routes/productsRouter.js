@@ -18,7 +18,7 @@ router.get('/filter', (req, res) => {
 })
 
 
-router.get('/:id', async (req, res,next) => {
+router.get('/:id', async (req, res, next) => {
 
   try {
     const {
@@ -29,12 +29,12 @@ router.get('/:id', async (req, res,next) => {
 
     res.json(product_id)
   } catch (err) {
-   /*  res.status(404).json({
-      message: err.message
-    })
-   */
-  next(err)
-}
+    /*  res.status(404).json({
+       message: err.message
+     })
+    */
+    next(err)
+  }
 })
 
 router.post("/", async (req, res) => {
@@ -47,7 +47,7 @@ router.post("/", async (req, res) => {
 })
 
 
-router.patch("/:id", async (req, res,next) => {
+router.patch("/:id", async (req, res, next) => {
 
   try {
 
