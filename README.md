@@ -1,6 +1,6 @@
-# my-store
+# fake-api-store
  
-### git clone 
-### cd /main
-### npm run dev 
+## git clone 
+## cd /api
+## npm run dev 
 
