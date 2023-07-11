@@ -32,6 +32,6 @@ app.use(errorHandler);
 app.use(boomErrorHandler);
 
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+  console.log(`Hello world server is running on port ${PORT}`);
 });
 
